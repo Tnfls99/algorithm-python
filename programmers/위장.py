@@ -10,7 +10,4 @@ def solution(clothes):
     for k in kinds:
         cnt = len(array[k])
         answer *= (cnt+1)
-    
-    
-    
     return answer-1

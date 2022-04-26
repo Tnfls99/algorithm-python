@@ -10,3 +10,4 @@ def solution(board):
         answer = max(m, answer)
         
     return answer**2
+    
