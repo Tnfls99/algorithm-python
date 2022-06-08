@@ -11,6 +11,8 @@ def solution(n, k):
         del nums[a]
 
         # k를 줄여야함.
+        # 이게 왜 이렇게 나오는가
+        # 
         k = k % math.factorial(n - 1)
         n -= 1
 
