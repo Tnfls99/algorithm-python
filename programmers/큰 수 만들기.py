@@ -1,4 +1,3 @@
-from collections import deque
 def solution(number, k):
     answer = []
     for n in number:
