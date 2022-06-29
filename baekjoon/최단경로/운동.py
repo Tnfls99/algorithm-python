@@ -1,26 +1,34 @@
 import sys
-
-# V: 마을 갯수, E: 도로 갯수
-V, E = map(int, sys.stdin.readline().split())
-
+import heapq
+input = sys.stdin.readline
 INF = int(1e9)
-arr = [[INF for _ in range(V+1)] for _ in range(V+1)]
+v,e = map(int, input().split())
+distance = [INF for _ in range(v+1)]
+graph = [[] for _ in range(v+1)]
+for _ in range(e):
+    a, b, c = map(int, input().split())
+    graph[a].append((b, c))
+    distance[b] = c
+answer = INF
+for start in range(1, v+1):
+    distance = [INF for _ in range(v+1)]
+    heap = []
+    for next, d in graph[start]:
+        distance[next] = d
+        heapq.heappush(heap, (next, d))
+    while heap:
+        end, dist = heapq.heappop(heap)
+        if start == end:
+            break
 
-for _ in range(E):
-    i, j, c = map(int, sys.stdin.readline().split())
-    arr[i][j] = c
+        if distance[end] < dist:
+            continue
 
-for k in range(1, V+1):
-    for i in range(1, V+1):  # from
-        for j in range(1, V+1):  # to
-            arr[i][j] = min(arr[i][j], arr[i][k] + arr[k][j])
+        for next_end, next_dist in graph[end]:
+            cost = dist + next_dist
+            if distance[next_end] > cost:
+                distance[next_end] = cost
+                heapq.heappush(heap, (next_end, cost))
+    answer = min(answer, distance[start])
 
-result = INF
-#  계속 갱신한 뒤 사이클은 본인부터 본인까지에 저장됨
-for i in range(1, V+1):
-    result = min(result, arr[i][i])
-
-if result == INF:
-    print(-1)
-else:
-    print(result)
+print(answer) if answer != INF else print(-1)
