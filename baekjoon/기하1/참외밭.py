@@ -1,4 +1,3 @@
-from cgitb import small
 import sys
 input = sys.stdin.readline
 melon = int(input())
